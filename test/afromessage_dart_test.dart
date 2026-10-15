@@ -143,6 +143,8 @@ void main() {
       expect(captured.url.queryParameters['to'], '+251912345678');
       expect(captured.url.queryParameters['len'], '4');
       expect(captured.url.queryParameters['ps'], 'is your code');
+      expect(captured.url.queryParameters['sa'], '1');
+      expect(captured.url.queryParameters['sb'], '1');
       expect(captured.url.queryParameters['sender'], 'Sender');
     });
 
