@@ -104,7 +104,7 @@ This is a **pure Dart** package (HTTP only). It works in Flutter apps, Flutter w
 
 ## Demo app
 
-A Flutter sample lives in [`demo_app/`](demo_app/) on GitHub (not published to pub.dev). It lets you try Send SMS / OTP / Verify with your own API key at runtime, or use **Mock mode** without network calls.
+A Flutter sample lives in [`demo_app/`](demo_app/) on GitHub (not published to pub.dev). It has **SMS** / **OTP** tabs, loads `API_Key` + `PHONE` from `.env` (key shown only as a green/red badge), and makes live AfroMessage calls.
 
 ```bash
 cd demo_app
