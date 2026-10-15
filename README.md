@@ -1,5 +1,11 @@
 ![afromessage_dart](assets/banner.png)
 
+<p align="center">
+  <img src="assets/SMS.png" alt="SMS demo" width="220" />
+  &nbsp;&nbsp;
+  <img src="assets/OTP.png" alt="OTP demo" width="220" />
+</p>
+
 # afromessage_dart
 
 Dart/Flutter client for [AfroMessage](https://afromessage.com) - Ethiopia's SMS API.
