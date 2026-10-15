@@ -54,7 +54,7 @@ void main() {
       expect(captured.headers['Authorization'], 'Bearer test-token');
 
       final body = jsonDecode(captured.body) as Map<String, dynamic>;
-      expect(body['to'], '0912345678');
+      expect(body['to'], '+251912345678');
       expect(body['message'], 'Hi');
       expect(body['sender'], 'MySender');
       expect(body['from'], 'id-1');
@@ -95,7 +95,7 @@ void main() {
       expect(captured.url.path, endsWith('/bulk_send'));
 
       final body = jsonDecode(captured.body) as Map<String, dynamic>;
-      expect(body['to'], ['0911111111', '0922222222']);
+      expect(body['to'], ['+251911111111', '+251922222222']);
       expect(body['message'], 'Bulk hello');
       expect(body['sender'], 'Sender');
     });
@@ -140,7 +140,7 @@ void main() {
       expect(result.response?.verificationId, 'vc-1');
       expect(captured.method, 'GET');
       expect(captured.url.path, endsWith('/challenge'));
-      expect(captured.url.queryParameters['to'], '0912345678');
+      expect(captured.url.queryParameters['to'], '+251912345678');
       expect(captured.url.queryParameters['len'], '4');
       expect(captured.url.queryParameters['ps'], 'is your code');
       expect(captured.url.queryParameters['sender'], 'Sender');
@@ -179,7 +179,7 @@ void main() {
       expect(result.response?.phone, '0912345678');
       expect(captured.url.path, endsWith('/verify'));
       expect(captured.url.queryParameters['code'], '1234');
-      expect(captured.url.queryParameters['to'], '0912345678');
+      expect(captured.url.queryParameters['to'], '+251912345678');
     });
 
     test('throws AfroMessageException on non-2xx', () async {
@@ -198,7 +198,7 @@ void main() {
 
       expect(
         () => sms.sendSms(
-          const SendSmsRequest(to: '09', message: 'x'),
+          const SendSmsRequest(to: '0912345678', message: 'x'),
         ),
         throwsA(
           isA<AfroMessageException>().having(
