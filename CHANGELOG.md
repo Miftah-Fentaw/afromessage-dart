@@ -1,9 +1,11 @@
 ## 1.0.3
 
-- Add Flutter `demo_app/` (path dependency, mock mode, runtime API key).
+- Add Flutter `demo_app/` (SMS/OTP tabs, `.env` credentials, live API only).
 - Slim `example/main.dart` for the pub.dev Example tab.
 - Ignore `doc/api/` and exclude `demo_app/` from the pub.dev upload.
-- Add demo screenshot for pub.dev package preview.
+- Default OTP `spacesBefore` / `spacesAfter` to `1` so postfix text is spaced.
+- Improve SMS error parsing when AfroMessage returns `acknowledge: error`.
+- README: SMS/OTP phone screenshots under the banner.
 
 ## 1.0.2
 
