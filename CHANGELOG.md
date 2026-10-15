@@ -1,3 +1,7 @@
+## 1.0.4
+
+- Fix `screenshots` in `pubspec.yaml` (must be a list, not a nested map).
+
 ## 1.0.3
 
 - Add Flutter `demo_app/` (SMS/OTP tabs, `.env` credentials, live API only).

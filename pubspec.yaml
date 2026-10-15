@@ -14,13 +14,13 @@ topics:
   - otp
   - flutter
 screenshots:
-  screenshots:
   - description: 'afromessage_dart logo'
     path: assets/logo.png
   - description: 'SMS tab demo'
     path: assets/SMS.png
   - description: 'OTP tab demo'
     path: assets/OTP.png
+
 environment:
   sdk: ^3.0.0
 
