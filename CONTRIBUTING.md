@@ -38,6 +38,18 @@ Use [GitHub Issues](https://github.com/Miftah-Fentaw/afromessage-dart/issues) fo
 - Minimal reproduction steps
 - Expected vs actual behavior
 
+## Releasing
+
+1. Add a `## X.Y.Z` section to `CHANGELOG.md`.
+2. From a clean `main` branch, run:
+
+```bash
+./scripts/release.sh X.Y.Z
+```
+
+That updates `pubspec.yaml`, runs checks, commits, tags `vX.Y.Z`, and pushes.
+GitHub Actions then publishes to pub.dev when automated publishing is enabled.
+
 ## Questions
 
 Open an issue or reach out via GitHub. For AfroMessage API behavior itself, see the [official docs](https://afromessage.com/developers).
