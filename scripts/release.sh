@@ -51,10 +51,14 @@ fi
 dart pub get
 dart analyze --fatal-infos
 dart test
-dart pub publish --dry-run
 
+# Commit the version bump first so `dart pub publish --dry-run` sees a clean tree
+# (a dirty pubspec.yaml makes dry-run exit non-zero and abort the release).
 git add pubspec.yaml
 git commit -m "Release v$VERSION"
+
+dart pub publish --dry-run
+
 git tag "$TAG"
 git push origin main --tags
 
