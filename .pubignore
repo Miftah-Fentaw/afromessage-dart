@@ -1,0 +1,5 @@
+# Generated docs — pub.dev builds its own
+doc/api/
+
+# Flutter demo stays on GitHub, not on pub.dev
+demo_app/

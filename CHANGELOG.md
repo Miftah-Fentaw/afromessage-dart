@@ -1,3 +1,10 @@
+## 1.0.3
+
+- Add Flutter `demo_app/` (path dependency, mock mode, runtime API key).
+- Slim `example/main.dart` for the pub.dev Example tab.
+- Ignore `doc/api/` and exclude `demo_app/` from the pub.dev upload.
+- Add demo screenshot for pub.dev package preview.
+
 ## 1.0.2
 
 - Remove maintainer release instructions from README (pub.dev landing page).

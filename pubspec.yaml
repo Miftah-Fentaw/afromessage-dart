@@ -16,6 +16,8 @@ topics:
 screenshots:
   - description: 'afromessage_dart logo'
     path: assets/logo.png
+  - description: 'Flutter demo app in mock mode (Send SMS / OTP / Verify)'
+    path: assets/demo_screenshot.png
 environment:
   sdk: ^3.0.0
 

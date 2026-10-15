@@ -102,6 +102,18 @@ sms.close();
 
 This is a **pure Dart** package (HTTP only). It works in Flutter apps, Flutter web, Dart CLI, and server-side Dart — no platform plugins needed.
 
+## Demo app
+
+A Flutter sample lives in [`demo_app/`](demo_app/) on GitHub (not published to pub.dev). It lets you try Send SMS / OTP / Verify with your own API key at runtime, or use **Mock mode** without network calls.
+
+```bash
+cd demo_app
+flutter pub get
+flutter run
+```
+
+> Demo only — call AfroMessage from your backend in production. Never commit API keys.
+
 ## Owner & maintainer
 
 **Miftah Fentaw** ([@Miftah-Fentaw](https://github.com/Miftah-Fentaw))
