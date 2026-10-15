@@ -211,5 +211,99 @@ void main() {
         ),
       );
     });
+
+    test('returns failed response when acknowledge is error', () async {
+      final client = MockClient((request) async {
+        return http.Response(
+          jsonEncode({
+            'acknowledge': 'error',
+            'response': {'message': 'Invalid sender'},
+          }),
+          200,
+          headers: {'content-type': 'application/json'},
+        );
+      });
+
+      final sms = AfroMessage(
+        const AfroMessageConfig(apiKey: 'token', senderName: 'X'),
+        client: client,
+      );
+
+      final result = await sms.sendSms(
+        const SendSmsRequest(to: '0912345678', message: 'Hi'),
+      );
+
+      expect(result.isSuccess, isFalse);
+      expect(result.error, 'Invalid sender');
+    });
+
+    test('throwOnApiError throws on acknowledge error', () async {
+      final client = MockClient((request) async {
+        return http.Response(
+          jsonEncode({
+            'acknowledge': 'error',
+            'response': {'message': 'Invalid sender'},
+          }),
+          200,
+          headers: {'content-type': 'application/json'},
+        );
+      });
+
+      final sms = AfroMessage(
+        const AfroMessageConfig(
+          apiKey: 'token',
+          throwOnApiError: true,
+        ),
+        client: client,
+      );
+
+      expect(
+        () => sms.sendSms(
+          const SendSmsRequest(to: '0912345678', message: 'Hi'),
+        ),
+        throwsA(
+          isA<AfroMessageException>()
+              .having((e) => e.acknowledge, 'acknowledge', 'error')
+              .having((e) => e.message, 'message', 'Invalid sender'),
+        ),
+      );
+    });
+
+    test('logs requests when logLevel is info', () async {
+      final lines = <String>[];
+      final client = MockClient((request) async {
+        return http.Response(
+          jsonEncode({
+            'acknowledge': 'success',
+            'response': {
+              'status': 'Sent',
+              'message_id': 'm',
+              'message': 'Hi',
+              'to': '+251912345678',
+            },
+          }),
+          200,
+          headers: {'content-type': 'application/json'},
+        );
+      });
+
+      final sms = AfroMessage(
+        AfroMessageConfig(
+          apiKey: 'token',
+          logLevel: AfroMessageLogLevel.info,
+          logger: (level, message, {error, stackTrace, context}) {
+            lines.add('$level:$message');
+          },
+        ),
+        client: client,
+      );
+
+      await sms.sendSms(
+        const SendSmsRequest(to: '0912345678', message: 'Hi'),
+      );
+
+      expect(lines.any((l) => l.contains('HTTP request')), isTrue);
+      expect(lines.any((l) => l.contains('API success')), isTrue);
+    });
   });
 }
