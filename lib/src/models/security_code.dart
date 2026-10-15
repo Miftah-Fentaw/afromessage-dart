@@ -25,8 +25,8 @@ class SendSecurityCodeRequest {
     this.callback,
     this.prefix,
     this.postfix,
-    this.spacesBefore = 0,
-    this.spacesAfter = 0,
+    this.spacesBefore = 1,
+    this.spacesAfter = 1,
   });
 
   final String to;
@@ -50,10 +50,10 @@ class SendSecurityCodeRequest {
   /// Text after the code.
   final String? postfix;
 
-  /// Spaces between [prefix] and the code.
+  /// Spaces between [prefix] and the code. Default `1`.
   final int spacesBefore;
 
-  /// Spaces between the code and [postfix].
+  /// Spaces between the code and [postfix]. Default `1`.
   final int spacesAfter;
 
   Map<String, String> toQueryParameters({

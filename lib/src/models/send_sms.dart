@@ -53,22 +53,44 @@ class SendSmsResponse {
     required this.acknowledge,
     this.response,
     this.error,
+    this.raw,
   });
 
   factory SendSmsResponse.fromJson(Map<String, dynamic> json) {
     final raw = json['response'];
+    SendSmsResponseData? data;
+    String? nestedError;
+
+    if (raw is Map<String, dynamic>) {
+      // Success payloads have message_id / status; error payloads often put
+      // the reason in response.message / response.errors instead of error.
+      if (raw.containsKey('message_id') || raw.containsKey('status')) {
+        data = SendSmsResponseData.fromJson(raw);
+      }
+      nestedError = raw['errors']?.toString() ??
+          raw['error']?.toString() ??
+          raw['message']?.toString();
+    } else if (raw != null) {
+      nestedError = raw.toString();
+    }
+
+    final topError = json['error']?.toString();
     return SendSmsResponse(
       acknowledge: json['acknowledge']?.toString() ?? 'unknown',
-      response: raw is Map<String, dynamic>
-          ? SendSmsResponseData.fromJson(raw)
-          : null,
-      error: json['error']?.toString(),
+      response: data,
+      error: (topError != null && topError.isNotEmpty && topError != 'null')
+          ? topError
+          : nestedError,
+      raw: json,
     );
   }
 
   final String acknowledge;
   final SendSmsResponseData? response;
   final String? error;
+
+  /// Full API JSON (useful when acknowledge is error).
+  final Map<String, dynamic>? raw;
 
   bool get isSuccess => acknowledge == 'success';
 }
