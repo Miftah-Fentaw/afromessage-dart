@@ -11,6 +11,8 @@ dependencies:
     sdk: flutter
   afromessage_dart:
     path: ../
+  flutter_launcher_icons: ^0.14.4
+  flutter_dotenv: ^6.0.1
 
 dev_dependencies:
   flutter_test:
@@ -19,3 +21,6 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  assets:
+    - .env
+    - assets/logo.png
