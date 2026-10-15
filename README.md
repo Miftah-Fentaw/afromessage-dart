@@ -2,7 +2,7 @@
 
 # afromessage_dart
 
-Dart/Flutter client for [AfroMessage](https://afromessage.com) — Ethiopia's SMS API.
+Dart/Flutter client for [AfroMessage](https://afromessage.com) - Ethiopia's SMS API.
 
 Same capabilities as the Node.js [`afromessage`](https://www.npmjs.com/package/afromessage) package:
 
@@ -95,6 +95,14 @@ sms.close();
 
 This is a **pure Dart** package (HTTP only). It works in Flutter apps, Flutter web, Dart CLI, and server-side Dart — no platform plugins needed.
 
+## Owner & maintainer
+
+**Miftah Fentaw** ([@Miftah-Fentaw](https://github.com/Miftah-Fentaw))
+
+## Contributing
+
+Contributions are welcome. See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
+
 ## License
 
-See repository license.
+This project is licensed under the [BSD 3-Clause License](LICENSE).
