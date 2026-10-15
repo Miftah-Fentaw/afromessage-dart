@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
+  <meta name="description" content="afromessage_dart API docs, for the Dart programming language.">
+  <title>afromessage_dart - Dart API docs</title>
+
+
+  
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet">
+  
+  <link rel="stylesheet" href="static-assets/github.css?v1">
+  <link rel="stylesheet" href="static-assets/styles.css?v1">
+  <link rel="icon" href="static-assets/favicon.png?v1">
+  
+</head>
+
+<body data-base-href="" data-using-base-href="false" class="light-theme">
+<div id="overlay-under-drawer"></div>
+<header id="title">
+  <span id="sidenav-left-toggle" class="material-symbols-outlined" role="button" tabindex="0">menu</span>
+  <ol class="breadcrumbs gt-separated dark hidden-xs">
+    <li><a href="https://afromessage.com/developers">afromessage_dart package</a></li>
+  </ol>
+  <div class="self-name">afromessage_dart</div>
+  <form class="search navbar-right" role="search">
+    <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+  <button class="toggle" id="theme-button" title="Toggle between light and dark mode" aria-label="Light and dark mode toggle">
+    <span id="dark-theme-button" class="material-symbols-outlined" aria-hidden="true">
+      dark_mode
+    </span>
+    <span id="light-theme-button" class="material-symbols-outlined" aria-hidden="true">
+      light_mode
+    </span>
+  </button>
+</header>
+<main>
+  <div id="dartdoc-main-content" class="main-content">
+      
+<section class="desc markdown">
+  <p><img src="assets/banner.png" alt="afromessage_dart"></p>
+<h1 id="afromessage_dart">afromessage_dart</h1>
+<p>Dart/Flutter client for <a href="https://afromessage.com">AfroMessage</a> - Ethiopia's SMS API.</p>
+<p>Same capabilities as the Node.js <a href="https://www.npmjs.com/package/afromessage"><code>afromessage</code></a> package:</p>
+<ul>
+<li>Send single SMS</li>
+<li>Send bulk / personalized SMS</li>
+<li>Send OTP / security codes</li>
+<li>Verify security codes</li>
+</ul>
+<p>Docs: <a href="https://afromessage.com/developers">AfroMessage developers</a></p>
+<h2 id="install">Install</h2>
+<pre class="language-bash"><code class="language-bash">dart pub add afromessage_dart
+# or in Flutter:
+flutter pub add afromessage_dart
+</code></pre>
+<h2 id="credentials">Credentials</h2>
+<p>From your <a href="https://api.afromessage.com/">AfroMessage dashboard</a>:</p>
+<table>
+<thead>
+<tr>
+<th>Value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>API token</td>
+<td>Bearer token for requests</td>
+</tr>
+<tr>
+<td>Sender name</td>
+<td>Verified sender label</td>
+</tr>
+<tr>
+<td>Identifier ID</td>
+<td>Short-code / identifier (optional if you have one)</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>Security:</strong> Do not ship your API token inside a public Flutter app. Prefer calling AfroMessage from your backend (Dart, Node, etc.) and expose only your own authenticated endpoints to the mobile client.</p>
+</blockquote>
+<h2 id="usage">Usage</h2>
+<pre class="language-dart"><code class="language-dart">import 'package:afromessage_dart/afromessage_dart.dart';
+
+final sms = AfroMessage(
+  AfroMessageConfig(
+    apiKey: 'YOUR_TOKEN',
+    senderName: 'YOUR_SENDER',
+    identifierId: 'YOUR_IDENTIFIER', // optional
+  ),
+);
+
+// Single SMS
+final sent = await sms.sendSms(
+  SendSmsRequest(
+    to: '0912345678',
+    message: 'Hello from Flutter/Dart',
+  ),
+);
+
+// Bulk SMS
+final bulk = await sms.sendBulkSms(
+  BulkSmsRequest(
+    to: ['0911111111', '0922222222'],
+    message: 'Hello everyone',
+  ),
+);
+
+// OTP
+final otp = await sms.sendSecurityCode(
+  SendSecurityCodeRequest(
+    to: '0912345678',
+    length: 6,
+    postfix: 'is your verification code',
+  ),
+);
+
+// Verify OTP
+final verified = await sms.verifyCode(
+  VerifyCodeRequest(
+    to: '0912345678',
+    code: '123456',
+  ),
+);
+
+sms.close();
+</code></pre>
+<h2 id="api-map">API map</h2>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>HTTP</th>
+<th>Endpoint</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>sendSms</code></td>
+<td>POST</td>
+<td><code>/api/send</code></td>
+</tr>
+<tr>
+<td><code>sendBulkSms</code></td>
+<td>POST</td>
+<td><code>/api/bulk_send</code></td>
+</tr>
+<tr>
+<td><code>sendSecurityCode</code></td>
+<td>GET</td>
+<td><code>/api/challenge</code></td>
+</tr>
+<tr>
+<td><code>verifyCode</code></td>
+<td>GET</td>
+<td><code>/api/verify</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="flutter-vs-dart">Flutter vs Dart</h2>
+<p>This is a <strong>pure Dart</strong> package (HTTP only). It works in Flutter apps, Flutter web, Dart CLI, and server-side Dart — no platform plugins needed.</p>
+<h2 id="owner--maintainer">Owner &amp; maintainer</h2>
+<p><strong>Miftah Fentaw</strong> (<a href="https://github.com/Miftah-Fentaw">@Miftah-Fentaw</a>)</p>
+<h2 id="contributing">Contributing</h2>
+<p>Contributions are welcome. See <a href="CONTRIBUTING.md">CONTRIBUTING.md</a> for guidelines.</p>
+<h2 id="license">License</h2>
+<p>This project is licensed under the <a href="LICENSE">BSD 3-Clause License</a>.</p>
+</section>
+
+
+      <section class="summary">
+          <h2>Libraries</h2>
+        <dl>
+          <dt id="afromessage_dart">
+  <span class="name"><a href="afromessage_dart/">afromessage_dart</a></span> 
+
+</dt>
+<dd>Dart/Flutter client for the AfroMessage Ethiopian SMS API.
+</dd>
+
+        </dl>
+      </section>
+  </div> <!-- /.main-content -->
+  <div id="dartdoc-sidebar-left" class="sidebar sidebar-offcanvas-left">
+    <!-- The search input and breadcrumbs below are only responsively visible at low resolutions. -->
+<header id="header-search-sidebar" class="hidden-l">
+  <form class="search-sidebar" role="search">
+    <input type="text" id="search-sidebar" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+</header>
+<ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
+    <li><a href="https://afromessage.com/developers">afromessage_dart package</a></li>
+</ol>
+
+    <h5 class="hidden-xs"><span class="package-name">afromessage_dart</span> <span class="package-kind">package</span></h5>
+    <ol>
+      <li class="section-title">Libraries</li>
+      <li><a href="afromessage_dart/">afromessage_dart</a></li>
+</ol>
+
+  </div>
+  <div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">
+  </div>
+</main>
+<footer>
+  <span class="no-break">
+    afromessage_dart
+      1.0.0
+  </span>
+  
+</footer>
+
+
+<script src="static-assets/highlight.pack.js?v1"></script>
+<script src="static-assets/docs.dart.js"></script>
+
+</body>
+</html>
+
