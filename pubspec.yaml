@@ -12,7 +12,9 @@ topics:
   - afromessage
   - otp
   - flutter
-
+screenshots:
+  - description: 'afromessage_dart logo'
+    path: assets/logo.png
 environment:
   sdk: ^3.0.0
 
