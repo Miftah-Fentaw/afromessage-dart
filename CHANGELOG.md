@@ -5,6 +5,7 @@
 - Ignore `doc/api/` and exclude `demo_app/` from the pub.dev upload.
 - Default OTP `spacesBefore` / `spacesAfter` to `1` so postfix text is spaced.
 - Improve SMS error parsing when AfroMessage returns `acknowledge: error`.
+- Document required vs optional credentials; add logging + richer errors.
 - README: SMS/OTP phone screenshots under the banner.
 
 ## 1.0.2
