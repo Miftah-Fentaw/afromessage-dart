@@ -33,6 +33,13 @@ From your [AfroMessage dashboard](https://api.afromessage.com/):
 
 > **Security:** Do not ship your API token inside a public Flutter app. Prefer calling AfroMessage from your backend (Dart, Node, etc.) and expose only your own authenticated endpoints to the mobile client.
 
+## Phone numbers
+
+Numbers are normalized to E.164 (`+251XXXXXXXXX`) before each request.
+Ethio Telecom (`09` / `9`) and Safaricom Ethiopia (`07` / `7`) are both accepted:
+
+`0912345678`, `912345678`, `0712345678`, `+251912345678`, `251712345678`, etc.
+
 ## Usage
 
 ```dart
@@ -46,7 +53,7 @@ final sms = AfroMessage(
   ),
 );
 
-// Single SMS
+// Single SMS (09…, 07…, +251… all work)
 final sent = await sms.sendSms(
   SendSmsRequest(
     to: '0912345678',
@@ -102,6 +109,11 @@ This is a **pure Dart** package (HTTP only). It works in Flutter apps, Flutter w
 ## Contributing
 
 Contributions are welcome. See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
+
+## Releasing
+
+1. Add a `## X.Y.Z` entry to [CHANGELOG.md](CHANGELOG.md).
+2. Run `./scripts/release.sh X.Y.Z` on a clean `main` branch.
 
 ## License
 
