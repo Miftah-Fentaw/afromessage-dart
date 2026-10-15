@@ -1,14 +1,22 @@
 name: afromessage_dart
-description: A starting point for Dart libraries or applications.
+description: >
+  unofficial Dart/Flutter client for AfroMessage — Ethiopia's SMS API.
+  Send SMS, bulk SMS, OTPs, and verify security codes.
 version: 1.0.0
-# repository: https://github.com/my_org/my_repo
+repository: https://github.com/Miftah-Fentaw/afromessage-dart
+homepage: https://afromessage.com/developers
+topics:
+  - sms
+  - ethiopia
+  - afromessage
+  - otp
+  - flutter
 
 environment:
-  sdk: ^3.12.2
+  sdk: ^3.0.0
 
-# Add regular dependencies here.
 dependencies:
-  # path: ^1.9.0
+  http: ^1.2.0
 
 dev_dependencies:
   lints: ^6.0.0
