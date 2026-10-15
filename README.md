@@ -110,11 +110,6 @@ This is a **pure Dart** package (HTTP only). It works in Flutter apps, Flutter w
 
 Contributions are welcome. See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
 
-## Releasing
-
-1. Add a `## X.Y.Z` entry to [CHANGELOG.md](CHANGELOG.md).
-2. Run `./scripts/release.sh X.Y.Z` on a clean `main` branch.
-
 ## License
 
 This project is licensed under the [BSD 3-Clause License](LICENSE).
