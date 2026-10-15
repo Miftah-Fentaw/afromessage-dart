@@ -1,3 +1,4 @@
 ## 1.0.0
 
-- Initial version.
+- Initial AfroMessage client for Dart/Flutter.
+- `sendSms`, `sendBulkSms`, `sendSecurityCode`, and `verifyCode`.
