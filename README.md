@@ -8,6 +8,8 @@
 
 # afromessage_dart
 
+[![pub package](https://img.shields.io/pub/v/afromessage_dart.svg)](https://pub.dev/packages/afromessage_dart)
+
 Unofficial Dart/Flutter client for [AfroMessage](https://afromessage.com) — a popular SMS gateway for **Ethiopia**.
 
 AfroMessage lets apps reach Ethiopian mobiles (Ethio Telecom and Safaricom) over a simple HTTP API: transactional texts, marketing/bulk campaigns, and one-time passwords for signup or 2FA. This package wraps that API so you can send a message, fire a bulk campaign, challenge a phone with an OTP, and verify the code — without hand-writing request URLs, auth headers, or phone-number formatting.
