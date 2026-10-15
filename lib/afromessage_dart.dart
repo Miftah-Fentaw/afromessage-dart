@@ -3,6 +3,7 @@ library;
 
 export 'src/afromessage.dart';
 export 'src/exceptions.dart';
+export 'src/logging.dart';
 export 'src/models/bulk_sms.dart';
 export 'src/models/config.dart';
 export 'src/models/security_code.dart';
