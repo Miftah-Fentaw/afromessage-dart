@@ -1,39 +1,100 @@
-<!--
-This README describes the package. If you publish this package to pub.dev,
-this README's contents appear on the landing page for your package.
+![afromessage_dart](assets/banner.png)
 
-For information about how to write a good package README, see the guide for
-[writing package pages](https://dart.dev/tools/pub/writing-package-pages).
+# afromessage_dart
 
-For general information about developing packages, see the Dart guide for
-[creating packages](https://dart.dev/tools/pub/create-packages)
-and the Flutter guide for
-[developing packages and plugins](https://flutter.dev/to/develop-packages).
--->
+Dart/Flutter client for [AfroMessage](https://afromessage.com) — Ethiopia's SMS API.
 
-TODO: Put a short description of the package here that helps potential users
-know whether this package might be useful for them.
+Same capabilities as the Node.js [`afromessage`](https://www.npmjs.com/package/afromessage) package:
 
-## Features
+- Send single SMS
+- Send bulk / personalized SMS
+- Send OTP / security codes
+- Verify security codes
 
-TODO: List what your package can do. Maybe include images, gifs, or videos.
+Docs: [AfroMessage developers](https://afromessage.com/developers)
 
-## Getting started
+## Install
 
-TODO: List prerequisites and provide or point to information on how to
-start using the package.
+```bash
+dart pub add afromessage_dart
+# or in Flutter:
+flutter pub add afromessage_dart
+```
+
+## Credentials
+
+From your [AfroMessage dashboard](https://api.afromessage.com/):
+
+| Value | Description |
+| --- | --- |
+| API token | Bearer token for requests |
+| Sender name | Verified sender label |
+| Identifier ID | Short-code / identifier (optional if you have one) |
+
+> **Security:** Do not ship your API token inside a public Flutter app. Prefer calling AfroMessage from your backend (Dart, Node, etc.) and expose only your own authenticated endpoints to the mobile client.
 
 ## Usage
 
-TODO: Include short and useful examples for package users. Add longer examples
-to `/example` folder.
-
 ```dart
-const like = 'sample';
+import 'package:afromessage_dart/afromessage_dart.dart';
+
+final sms = AfroMessage(
+  AfroMessageConfig(
+    apiKey: 'YOUR_TOKEN',
+    senderName: 'YOUR_SENDER',
+    identifierId: 'YOUR_IDENTIFIER', // optional
+  ),
+);
+
+// Single SMS
+final sent = await sms.sendSms(
+  SendSmsRequest(
+    to: '0912345678',
+    message: 'Hello from Flutter/Dart',
+  ),
+);
+
+// Bulk SMS
+final bulk = await sms.sendBulkSms(
+  BulkSmsRequest(
+    to: ['0911111111', '0922222222'],
+    message: 'Hello everyone',
+  ),
+);
+
+// OTP
+final otp = await sms.sendSecurityCode(
+  SendSecurityCodeRequest(
+    to: '0912345678',
+    length: 6,
+    postfix: 'is your verification code',
+  ),
+);
+
+// Verify OTP
+final verified = await sms.verifyCode(
+  VerifyCodeRequest(
+    to: '0912345678',
+    code: '123456',
+  ),
+);
+
+sms.close();
 ```
 
-## Additional information
+## API map
 
-TODO: Tell users more about the package: where to find more information, how to
-contribute to the package, how to file issues, what response they can expect
-from the package authors, and more.
+| Method | HTTP | Endpoint |
+| --- | --- | --- |
+| `sendSms` | POST | `/api/send` |
+| `sendBulkSms` | POST | `/api/bulk_send` |
+| `sendSecurityCode` | GET | `/api/challenge` |
+| `verifyCode` | GET | `/api/verify` |
+
+## Flutter vs Dart
+
+This is a **pure Dart** package (HTTP only). It works in Flutter apps, Flutter web, Dart CLI, and server-side Dart — no platform plugins needed.
+
+## License
+
+See repository license.
