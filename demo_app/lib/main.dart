@@ -356,7 +356,9 @@ class _DemoHomePageState extends State<DemoHomePage> {
                             _phoneController.text.trim().ifEmpty('No phone'),
                         trailing: Icon(
                           _hasApiKey ? Icons.check_circle : Icons.error_outline,
-                          color: _hasApiKey ? const Color(0xFF22C55E) : Colors.redAccent,
+                          color: _hasApiKey
+                              ? const Color(0xFF22C55E)
+                              : Colors.redAccent,
                           size: 22,
                         ),
                       ),
@@ -381,7 +383,10 @@ class _DemoHomePageState extends State<DemoHomePage> {
                         ),
                       ),
                       const SizedBox(height: 20),
-                      if (_tabIndex == 0) _buildSmsPanel() else _buildOtpPanel(),
+                      if (_tabIndex == 0)
+                        _buildSmsPanel()
+                      else
+                        _buildOtpPanel(),
                       if (_busy) ...[
                         const SizedBox(height: 20),
                         const Center(
