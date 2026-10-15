@@ -1,0 +1,29 @@
+name: Publish to pub.dev
+
+on:
+  push:
+    tags:
+      - 'v[0-9]+.[0-9]+.[0-9]+*'
+
+jobs:
+  check-version:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Verify tag matches pubspec version
+        run: |
+          TAG="${GITHUB_REF_NAME#v}"
+          VERSION=$(sed -n 's/^version:[[:space:]]*//p' pubspec.yaml | head -n1 | tr -d '[:space:]')
+          echo "Tag version: $TAG"
+          echo "pubspec version: $VERSION"
+          if [ "$TAG" != "$VERSION" ]; then
+            echo "Error: git tag v$TAG does not match pubspec.yaml version $VERSION"
+            exit 1
+          fi
+
+  publish:
+    needs: check-version
+    permissions:
+      id-token: write
+    uses: dart-lang/setup-dart/.github/workflows/publish.yml@v1
