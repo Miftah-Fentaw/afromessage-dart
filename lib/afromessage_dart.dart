@@ -8,3 +8,4 @@ export 'src/models/config.dart';
 export 'src/models/security_code.dart';
 export 'src/models/send_sms.dart';
 export 'src/models/verify_code.dart';
+export 'src/phone.dart';
