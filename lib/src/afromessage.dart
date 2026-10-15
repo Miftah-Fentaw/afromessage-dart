@@ -8,6 +8,7 @@ import 'models/config.dart';
 import 'models/security_code.dart';
 import 'models/send_sms.dart';
 import 'models/verify_code.dart';
+import 'phone.dart';
 
 /// Dart client for the [AfroMessage](https://afromessage.com) Ethiopian SMS API.
 ///
@@ -47,6 +48,8 @@ class AfroMessage {
       };
 
   /// Sends a single SMS via `POST /send`.
+  ///
+  /// [SendSmsRequest.to] is normalized with [normalizeEthiopianPhone].
   Future<SendSmsResponse> sendSms(SendSmsRequest request) async {
     if (request.to.isEmpty || request.message.isEmpty) {
       throw AfroMessageException('Both to and message are required.');
@@ -56,12 +59,15 @@ class AfroMessage {
       defaultFrom: config.identifierId,
       defaultSender: config.senderName,
     );
+    body['to'] = normalizeEthiopianPhone(request.to);
 
     final json = await _postJson('/send', body);
     return SendSmsResponse.fromJson(json);
   }
 
   /// Sends bulk SMS via `POST /bulk_send`.
+  ///
+  /// Recipient numbers are normalized with [normalizeEthiopianPhone].
   Future<BulkSmsResponse> sendBulkSms(BulkSmsRequest request) async {
     final hasRecipients = (request.to != null && request.to!.isNotEmpty) ||
         (request.personalizedTo != null && request.personalizedTo!.isNotEmpty);
@@ -84,11 +90,26 @@ class AfroMessage {
       defaultSender: config.senderName,
     );
 
+    if (request.personalizedTo != null) {
+      body['to'] = request.personalizedTo!
+          .map(
+            (r) => {
+              'to': normalizeEthiopianPhone(r.to),
+              'message': r.message,
+            },
+          )
+          .toList();
+    } else if (request.to != null) {
+      body['to'] = request.to!.map(normalizeEthiopianPhone).toList();
+    }
+
     final json = await _postJson('/bulk_send', body);
     return BulkSmsResponse.fromJson(json);
   }
 
   /// Sends an OTP / security code via `GET /challenge`.
+  ///
+  /// [SendSecurityCodeRequest.to] is normalized with [normalizeEthiopianPhone].
   Future<SendSecurityCodeResponse> sendSecurityCode(
     SendSecurityCodeRequest request,
   ) async {
@@ -100,18 +121,27 @@ class AfroMessage {
       defaultFrom: config.identifierId,
       defaultSender: config.senderName,
     );
+    params['to'] = normalizeEthiopianPhone(request.to);
 
     final json = await _getJson('/challenge', params);
     return SendSecurityCodeResponse.fromJson(json);
   }
 
   /// Verifies an OTP / security code via `GET /verify`.
+  ///
+  /// When [VerifyCodeRequest.to] is set, it is normalized with
+  /// [normalizeEthiopianPhone].
   Future<VerifyCodeResponse> verifyCode(VerifyCodeRequest request) async {
     if (request.code.isEmpty) {
       throw AfroMessageException('code is required.');
     }
 
-    final json = await _getJson('/verify', request.toQueryParameters());
+    final params = request.toQueryParameters();
+    if (request.to != null && request.to!.isNotEmpty) {
+      params['to'] = normalizeEthiopianPhone(request.to!);
+    }
+
+    final json = await _getJson('/verify', params);
     return VerifyCodeResponse.fromJson(json);
   }
 

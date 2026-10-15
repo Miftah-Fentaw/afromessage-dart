@@ -9,7 +9,10 @@ class SendSmsRequest {
     this.callback,
   });
 
-  /// Recipient phone number (e.g. `09XXXXXXXX` or `+2519XXXXXXXX`).
+  /// Recipient phone number.
+  ///
+  /// Accepts Ethio Telecom / Safaricom forms such as `09…`, `07…`, `9…`,
+  /// `7…`, `251…`, or `+251…`. Normalized to E.164 before sending.
   final String to;
 
   /// Message body, or template UID when [template] is non-zero.
